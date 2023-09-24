@@ -1,5 +1,8 @@
 class Contact < ApplicationRecord
-    belongs_to :kind, optional: true
+    # Associações
+    belongs_to :kind, optional: true # Como tem apenas um tipo, :kind fica no singular.
+    has_many :phones # Como tem vários telefones, :phones fica no plural.
+    accepts_nested_attributes_for :phones, allow_destroy: true
 
     def birthdate_br
         I18n.l(self.birthdate) unless self.birthdate.blank?
@@ -21,12 +24,11 @@ class Contact < ApplicationRecord
     #     self.kind.description
     # end
 
-    # def as_json(options={})
-    #     super(
-    #         root: true,
-    #         methods: [:author, :kind_description]
-    #     )
-    # end
+    def as_json(options={})
+       hash = super(options)
+       hash[:birthdate] = (I18n.l(self.birthdate) unless self.birthdate.blank?)
+       hash
+    end
 
     # def hello
     #     I18n.translate('hello')
