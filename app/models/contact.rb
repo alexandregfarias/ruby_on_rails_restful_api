@@ -2,7 +2,9 @@ class Contact < ApplicationRecord
     # Associações
     belongs_to :kind, optional: true # Como tem apenas um tipo, :kind fica no singular.
     has_many :phones # Como tem vários telefones, :phones fica no plural.
+    has_one :adress
     accepts_nested_attributes_for :phones, allow_destroy: true
+    accepts_nested_attributes_for :adress, update_only: true
 
     def birthdate_br
         I18n.l(self.birthdate) unless self.birthdate.blank?

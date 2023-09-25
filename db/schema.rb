@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_24_190759) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_24_224936) do
+  create_table "adresses", force: :cascade do |t|
+    t.string "street"
+    t.string "city"
+    t.integer "contact_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contact_id"], name: "index_adresses_on_contact_id"
+  end
+
   create_table "contacts", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -35,6 +44,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_24_190759) do
     t.index ["contact_id"], name: "index_phones_on_contact_id"
   end
 
+  add_foreign_key "adresses", "contacts"
   add_foreign_key "contacts", "kinds"
   add_foreign_key "phones", "contacts"
 end
