@@ -4,14 +4,14 @@ class ContactsController < ApplicationController
   # GET /contacts
   def index
     @contacts = Contact.all
-    render json: @contacts, include: [:kind, :phones, :adress]
+    render json: @contacts #, include: [:kind, :phones, :adress]
     
     # render json: @contacts.map { |contact| contact.attributes.merge({ author: "Alexandre Farias" }) }
   end
 
   # GET /contacts/1
   def show
-    render json: @contact, include: [:kind, :phones, :adress]
+    render json: @contact, include: [:kind, :adress, :phones] #, meta: { author: "Alexandre Farias"} #, include: [:kind, :phones, :adress]
 
     # render json: @contact
     # render json: @contact, methods: :author, root: true
